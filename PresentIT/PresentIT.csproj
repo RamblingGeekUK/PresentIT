@@ -1,0 +1,47 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="wwwroot\node_modules\media-recorder-js\.eslintrc.json" />
+    <Content Include="wwwroot\node_modules\media-recorder-js\.jsdoc.json" />
+    <Content Include="wwwroot\node_modules\media-recorder-js\bower.json" />
+    <Content Include="wwwroot\node_modules\media-recorder-js\docs\index.html" />
+    <Content Include="wwwroot\node_modules\media-recorder-js\docs\index.js.html" />
+    <Content Include="wwwroot\node_modules\media-recorder-js\docs\QBMediaRecorder.html" />
+    <Content Include="wwwroot\node_modules\media-recorder-js\docs\scripts\prettify\Apache-License-2.0.txt" />
+    <Content Include="wwwroot\node_modules\media-recorder-js\docs\styles\jsdoc.css" />
+    <Content Include="wwwroot\node_modules\media-recorder-js\docs\styles\prettify.css" />
+    <Content Include="wwwroot\node_modules\media-recorder-js\logo.png" />
+    <Content Include="wwwroot\node_modules\media-recorder-js\package.json" />
+    <Content Include="wwwroot\node_modules\media-recorder-js\sample\css\main.css" />
+    <Content Include="wwwroot\node_modules\media-recorder-js\sample\css\spectre.min.css" />
+    <Content Include="wwwroot\node_modules\media-recorder-js\sample\index.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\js\main.js" />
+    <None Include="wwwroot\node_modules\media-recorder-js\.eslintignore" />
+    <None Include="wwwroot\node_modules\media-recorder-js\docs\scripts\linenumber.js" />
+    <None Include="wwwroot\node_modules\media-recorder-js\docs\scripts\prettify\lang-css.js" />
+    <None Include="wwwroot\node_modules\media-recorder-js\docs\scripts\prettify\prettify.js" />
+    <None Include="wwwroot\node_modules\media-recorder-js\gulpfile.js" />
+    <None Include="wwwroot\node_modules\media-recorder-js\LICENSE" />
+    <None Include="wwwroot\node_modules\media-recorder-js\qbAudioRecorderWorker.js" />
+    <None Include="wwwroot\node_modules\media-recorder-js\qbMediaRecorder.js" />
+    <None Include="wwwroot\node_modules\media-recorder-js\README.md" />
+    <None Include="wwwroot\node_modules\media-recorder-js\sample\main.js" />
+    <None Include="wwwroot\node_modules\media-recorder-js\src\errors.js" />
+    <None Include="wwwroot\node_modules\media-recorder-js\src\index.js" />
+    <None Include="wwwroot\node_modules\media-recorder-js\src\mimeTypes.js" />
+    <None Include="wwwroot\node_modules\media-recorder-js\src\qbAudioRecorderWorker.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="3.1.8" />
+  </ItemGroup>
+
+</Project>
