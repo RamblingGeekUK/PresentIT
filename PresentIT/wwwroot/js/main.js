@@ -348,6 +348,20 @@ var inputCard = {
     }
 };
 
+function azureStream(blob) {
+    let fd = new FormData();
+    fd.append('blob', blob,);
+    $.ajax({
+        type: 'POST',
+        enctype: 'multipart/form-data',
+        url: '/Demo/Create',
+        contentType: false,
+        processData: false,
+        cache: false,
+        data: fd
+    });
+}
+
 /* Start !FUN */
 inputCard.init()
     .then(function () {
@@ -362,6 +376,7 @@ function initRecorder() {
         onstop: function onStoppedRecording(blob) {
             resultCard.blob = blob;
             resultCard.attachVideo(blob);
+            console.dir(blob);
         },
         workerPath: inputCard.audioRecorderWorkerPath
     };
@@ -372,6 +387,7 @@ function initRecorder() {
 
     inputCard.ui.wrap.addEventListener('started', function () {
         rec.start(inputCard.stream);
+
     }, false);
 
     inputCard.ui.wrap.addEventListener('paused', function () {
@@ -393,7 +409,11 @@ function initRecorder() {
         resultCard.toggleBtn(false);
     }, false);
 
+    //resultCard.ui.wrap.addEventListener('download', function () {
+    //    rec.download(null, resultCard.blob);
+    //}, false);
+
     resultCard.ui.wrap.addEventListener('download', function () {
-        rec.download(null, resultCard.blob);
+        azureStream(resultCard.blob);
     }, false);
 }

@@ -129,7 +129,7 @@ namespace PresentIT
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Company}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
 
