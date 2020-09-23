@@ -7,21 +7,16 @@ using PresentIT.Models;
 
 namespace PresentIT.Services
 {
-    public class CosmosDbService : ICosmosDbService
+    public class CandidateCosmosDbService : ICandidateCosmosDbService
     {
         private Container _container;
 
-        public CosmosDbService(
+        public CandidateCosmosDbService(
             CosmosClient dbClient,
             string databaseName,
             string containerName)
         {
             this._container = dbClient.GetContainer(databaseName, containerName);
-        }
-
-        public async Task AddItemAsync(Company item)
-        {
-            await this._container.CreateItemAsync<Company>(item, new PartitionKey(item.Id));
         }
 
         public async Task AddItemAsync(Candidate item)
@@ -31,14 +26,14 @@ namespace PresentIT.Services
 
         public async Task DeleteItemAsync(string id)
         {
-            await this._container.DeleteItemAsync<Company>(id, new PartitionKey(id));
+            await this._container.DeleteItemAsync<Candidate>(id, new PartitionKey(id));
         }
 
-        public async Task<Company> GetItemAsync(string id)
+        public async Task<Candidate> GetItemAsync(string id)
         {
             try
             {
-                ItemResponse<Company> response = await this._container.ReadItemAsync<Company>(id, new PartitionKey(id));
+                ItemResponse<Candidate> response = await this._container.ReadItemAsync<Candidate>(id, new PartitionKey(id));
                 return response.Resource;
             }
             catch (CosmosException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
@@ -48,10 +43,11 @@ namespace PresentIT.Services
 
         }
 
-        public async Task<IEnumerable<Company>> GetItemsAsync(string queryString)
+
+        public async Task<IEnumerable<Candidate>> GetItemsAsync(string queryString)
         {
-            var query = this._container.GetItemQueryIterator<Company>(new QueryDefinition(queryString));
-            List<Company> results = new List<Company>();
+            var query = this._container.GetItemQueryIterator<Candidate>(new QueryDefinition(queryString));
+            List<Candidate> results = new List<Candidate>();
             while (query.HasMoreResults)
             {
                 var response = await query.ReadNextAsync();
@@ -62,9 +58,9 @@ namespace PresentIT.Services
             return results;
         }
 
-        public async Task UpdateItemAsync(string id, Company item)
+        public async Task UpdateItemAsync(string id, Candidate item)
         {
-            await this._container.UpsertItemAsync<Company>(item, new PartitionKey(id));
+            await this._container.UpsertItemAsync<Candidate>(item, new PartitionKey(id));
         }
     }
 }
