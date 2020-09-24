@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks;
-using Microsoft.Azure.Cosmos;
+﻿using Microsoft.Azure.Cosmos;
 using PresentIT.Models;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace PresentIT.Services
 {
@@ -24,10 +23,7 @@ namespace PresentIT.Services
             await this._container.CreateItemAsync<Company>(item, new PartitionKey(item.Id));
         }
 
-        public async Task AddItemAsync(Candidate item)
-        {
-            await this._container.CreateItemAsync<Candidate>(item, new PartitionKey(item.Id));
-        }
+       
 
         public async Task DeleteItemAsync(string id)
         {
@@ -68,6 +64,3 @@ namespace PresentIT.Services
         }
     }
 }
-
-
-

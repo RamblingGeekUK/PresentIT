@@ -14,6 +14,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.EntityFrameworkCore;
 using PresentIT.Services;
 
 namespace PresentIT
@@ -32,14 +33,18 @@ namespace PresentIT
         {
 
             services.AddControllersWithViews();
-            services.AddSingleton<ICosmosDbService>(InitializeCosmosClientInstanceAsync(Configuration.GetSection("CosmosDb")).GetAwaiter().GetResult());
-
+        
+            services.AddDbContext<PITContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("DBConection")));
+            
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+
+           
 
             // Add authentication services
             services.AddAuthentication(options => {
@@ -110,8 +115,7 @@ namespace PresentIT
                 
             });
 
-
-            services.AddControllersWithViews();
+   
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -140,24 +144,6 @@ namespace PresentIT
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
-        }
-
-        /// <summary>
-        /// Creates a Cosmos DB database and a container with the specified partition key. 
-        /// </summary>
-        /// <returns></returns>
-        private static async Task<CosmosDbService> InitializeCosmosClientInstanceAsync(IConfigurationSection configurationSection)
-        {
-            string databaseName = configurationSection.GetSection("DatabaseName").Value;
-            string containerName = configurationSection.GetSection("ContainerName").Value;
-            string account = configurationSection.GetSection("Account").Value;
-            string key = configurationSection.GetSection("Key").Value;
-            Microsoft.Azure.Cosmos.CosmosClient client = new Microsoft.Azure.Cosmos.CosmosClient(account, key);
-            CosmosDbService cosmosDbService = new CosmosDbService(client, databaseName, containerName);
-            Microsoft.Azure.Cosmos.DatabaseResponse database = await client.CreateDatabaseIfNotExistsAsync(databaseName);
-            await database.Database.CreateContainerIfNotExistsAsync(containerName, "/id");
-
-            return cosmosDbService;
         }
     }
 }

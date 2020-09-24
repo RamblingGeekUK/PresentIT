@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks;
-using Microsoft.Azure.Cosmos;
+﻿using Microsoft.Azure.Cosmos;
 using PresentIT.Models;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace PresentIT.Services
 {
@@ -64,6 +63,3 @@ namespace PresentIT.Services
         }
     }
 }
-
-
-
