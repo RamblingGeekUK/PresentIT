@@ -21,8 +21,9 @@ namespace PresentIT.Migrations
 
             modelBuilder.Entity("PresentIT.Models.Candidate", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("Accepted")
                         .HasColumnType("bit");
@@ -46,8 +47,9 @@ namespace PresentIT.Migrations
 
             modelBuilder.Entity("PresentIT.Models.Company", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("Active")
                         .HasColumnType("bit");

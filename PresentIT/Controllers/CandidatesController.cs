@@ -26,7 +26,7 @@ namespace PresentIT.Controllers
         }
 
         // GET: Candidates/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
             {
@@ -58,6 +58,7 @@ namespace PresentIT.Controllers
         {
             if (ModelState.IsValid)
             {
+                candidate.Id = Guid.NewGuid();
                 _context.Add(candidate);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -66,7 +67,7 @@ namespace PresentIT.Controllers
         }
 
         // GET: Candidates/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(Guid? id)
         {
             if (id == null)
             {
@@ -86,7 +87,7 @@ namespace PresentIT.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,Firstname,Surname,Created,Accepted,VideoURL")] Candidate candidate)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Firstname,Surname,Created,Accepted,VideoURL")] Candidate candidate)
         {
             if (id != candidate.Id)
             {
@@ -117,7 +118,7 @@ namespace PresentIT.Controllers
         }
 
         // GET: Candidates/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
             {
@@ -137,7 +138,7 @@ namespace PresentIT.Controllers
         // POST: Candidates/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var candidate = await _context.Candidate.FindAsync(id);
             _context.Candidate.Remove(candidate);
@@ -145,7 +146,7 @@ namespace PresentIT.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CandidateExists(string id)
+        private bool CandidateExists(Guid id)
         {
             return _context.Candidate.Any(e => e.Id == id);
         }

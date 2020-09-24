@@ -26,7 +26,7 @@ namespace PresentIT.Controllers
         }
 
         // GET: Companies/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(Guid id)
         {
             if (id == null)
             {
@@ -86,7 +86,7 @@ namespace PresentIT.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,CompanyName,DateCreated,Active")] Company company)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,CompanyName,DateCreated,Active")] Company company)
         {
             if (id != company.Id)
             {
@@ -117,7 +117,7 @@ namespace PresentIT.Controllers
         }
 
         // GET: Companies/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(Guid id)
         {
             if (id == null)
             {
@@ -145,7 +145,7 @@ namespace PresentIT.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CompanyExists(string id)
+        private bool CompanyExists(Guid id)
         {
             return _context.Company.Any(e => e.Id == id);
         }

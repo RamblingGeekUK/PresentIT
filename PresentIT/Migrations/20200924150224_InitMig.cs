@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PresentIT.Migrations
 {
-    public partial class Candidates : Migration
+    public partial class InitMig : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,7 +11,7 @@ namespace PresentIT.Migrations
                 name: "Candidate",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
                     Firstname = table.Column<string>(nullable: true),
                     Surname = table.Column<string>(nullable: true),
                     Created = table.Column<DateTime>(nullable: false),
@@ -22,12 +22,29 @@ namespace PresentIT.Migrations
                 {
                     table.PrimaryKey("PK_Candidate", x => x.Id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Company",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    CompanyName = table.Column<string>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    Active = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Company", x => x.Id);
+                });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "Candidate");
+
+            migrationBuilder.DropTable(
+                name: "Company");
         }
     }
 }
