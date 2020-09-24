@@ -68,7 +68,7 @@ var resultCard = {
 };
 
 var inputCard = {
-    audioRecorderWorkerPath: '../qbAudioRecorderWorker.js',
+    audioRecorderWorkerPath: '../node_modules/media-recorder-js/qbAudioRecorderWorker.js',
     stream: null,
     devices: {
         audio: [],
@@ -354,7 +354,7 @@ function azureStream(blob) {
     $.ajax({
         type: 'POST',
         enctype: 'multipart/form-data',
-        url: '/Demo/Create',
+        url: '/Video/Upload',
         contentType: false,
         processData: false,
         cache: false,

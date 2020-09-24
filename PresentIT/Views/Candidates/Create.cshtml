@@ -5,37 +5,180 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
+<p>
+    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-sliders" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M11.5 2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM9.05 3a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0V3h9.05zM4.5 7a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM2.05 8a2.5 2.5 0 0 1 4.9 0H16v1H6.95a2.5 2.5 0 0 1-4.9 0H0V8h2.05zm9.45 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm-2.45 1a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0v-1h9.05z"></path>
+        </svg>
+    </button>
+</p>
 
-<h4>Candidate</h4>
-<hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Firstname" class="control-label"></label>
-                <input asp-for="Firstname" class="form-control" />
-                <span asp-validation-for="Firstname" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Surname" class="control-label"></label>
-                <input asp-for="Surname" class="form-control" />
-                <span asp-validation-for="Surname" class="text-danger"></span>
-            </div>
-           
-            
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+
+                <div class="card j-card">
+                    <div class="card-image">
+                        <div class="video-responsive">
+                            <video class=" j-video_local video" controls muted></video>
+                        </div>
+                    </div>
+
+                    <div class="collapse" id="collapseExample">
+                        <div class="card card-body">
+                            <div class="source">
+                                <div class="form-group">
+                                    <select id="j-audioSource" class="invisible form-select select-sm">
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <select id="j-videoSource" class="invisible form-select select-sm">
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <select id="j-mimeTypes" class="invisible form-select select-sm">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <h5 class="card-title">Recording</h5>
+                    <div class="btn-group btn-group-block">
+                        <button class="btn j-start">Start</button>
+                        <button class="btn j-pause" disabled>Pause</button>
+                        <button class="btn j-resume" disabled>Resume</button>
+                        <button class="btn j-stop" disabled>Stop</button>
+                    </div>
+                </div>
+                <div class="column col-6 col-xs-12">
+                    <div class="card j-result-card">
+                        <div class="card-image">
+                            <div class="video-responsive">
+                                <video class="j-video_result video" controls></video>
+                            </div>
+                        </div>
+
+                        <div class="card-footer">
+                            <h5 class="card-title">Record</h5>
+                            <div class="btn-group btn-group-block">
+                                <button class="btn j-clear" disabled>Clear</button>
+                                <button class="btn j-download" disabled>Download</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Firstname" class="control-label"></label>
+                        <input asp-for="Firstname" class="form-control" />
+                        <span asp-validation-for="Firstname" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Surname" class="control-label"></label>
+                        <input asp-for="Surname" class="form-control" />
+                        <span asp-validation-for="Surname" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="VideoURL" class="control-label"></label>
+                        <input asp-for="VideoURL" class="form-control" value="@ViewData["VideoURL"]" />
+                        <span asp-validation-for="VideoURL" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    @ViewData["VideoURL"]
+</div>    
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+
+
+
+@*<div class="content">
+
+
+
+        <main>
+            <div class="columns wrap">
+                <div class="column col-6 col-xs-12">
+                    <div class="card j-card">
+                        <div class="card-image">
+                            <div class="video-responsive">
+                                <video class=" j-video_local video" controls muted></video>
+                            </div>
+                        </div>
+
+                        <div class="source">
+                            <div class="form-group">
+                                <select id="j-audioSource" class="invisible form-select select-sm">
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <select id="j-videoSource" class="invisible form-select select-sm">
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <select id="j-mimeTypes" class="invisible form-select select-sm">
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="card-footer">
+                            <h5 class="card-title">Recording</h5>
+                            <div class="btn-group btn-group-block">
+                                <button class="btn j-start">Start</button>
+                                <button class="btn j-pause" disabled>Pause</button>
+                                <button class="btn j-resume" disabled>Resume</button>
+                                <button class="btn j-stop" disabled>Stop</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column col-6 col-xs-12">
+                    <div class="card j-result-card">
+                        <div class="card-image">
+                            <div class="video-responsive">
+                                <video class="j-video_result video" controls></video>
+                            </div>
+                        </div>
+
+                        <div class="card-footer">
+                            <h5 class="card-title">Record</h5>
+                            <div class="btn-group btn-group-block">
+                                <button class="btn j-clear" disabled>Clear</button>
+                                <button class="btn j-download" disabled>Download</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>*@
+
+
+<script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+<script src="~/node_modules/media-recorder-js/qbMediaRecorder.js"></script>
+<script src="~/js/main.js"></script>

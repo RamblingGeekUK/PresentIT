@@ -9,22 +9,16 @@ using System.Threading.Tasks;
 
 namespace PresentIT.Controllers
 {
-    public class DemoController : Controller
+    public class VideoController : Controller
     {
         private readonly IConfiguration _configuration;
-        public DemoController(IConfiguration configuration)
+        public VideoController(IConfiguration configuration)
         {
             _configuration = configuration;
         }
 
-        [HttpGet]
-        public IActionResult Create()
-        {
-            return View();
-        }
-
         [HttpPost]
-        public async Task<IActionResult> Create([FromForm] IFormFile blob)
+        public async Task<IActionResult> Upload([FromForm] IFormFile blob)
         {
 
             //MemoryStream mem = new MemoryStream();
@@ -36,7 +30,7 @@ namespace PresentIT.Controllers
             // Create the blob client.
             CloudBlobClient blobClient = cloudStorageAccount.CreateCloudBlobClient();
             // Retrieve a reference to a container.
-            CloudBlobContainer container = blobClient.GetContainerReference("filescontainers");
+            CloudBlobContainer container = blobClient.GetContainerReference("videos");
             // This also does not make a service call; it only creates a local object.
             CloudBlockBlob blockBlob = container.GetBlockBlobReference(SpecialFileName);
 
@@ -44,7 +38,8 @@ namespace PresentIT.Controllers
             {
                 await blockBlob.UploadFromStreamAsync(data);
             }
-            return View("Create");
+            
+            return Ok(blockBlob.StorageUri.ToString());
         }
 
         static string SpecialFileName
