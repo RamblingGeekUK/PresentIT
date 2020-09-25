@@ -358,7 +358,18 @@ function azureStream(blob) {
         contentType: false,
         processData: false,
         cache: false,
-        data: fd
+        data: fd,
+        success: function (data) {
+
+            $("#output").text(data);
+            console.log("SUCCESS : ", data);
+            document.getElementById("VideoURL").value = data;
+        },
+        error: function (e) {
+
+            $("#output").text(e.responseText);
+            console.log("ERROR : ", e);
+        }
     });
 }
 

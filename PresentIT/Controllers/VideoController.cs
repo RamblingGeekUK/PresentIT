@@ -39,7 +39,7 @@ namespace PresentIT.Controllers
                 await blockBlob.UploadFromStreamAsync(data);
             }
             
-            return Ok(blockBlob.StorageUri.ToString());
+            return Ok(blockBlob.StorageUri.PrimaryUri.ToString());
         }
 
         static string SpecialFileName
