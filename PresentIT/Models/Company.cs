@@ -16,9 +16,7 @@ namespace PresentIT.Models
         public DateTime DateCreated {
             get
             {
-                return this._dateCreated.HasValue
-                   ? this._dateCreated.Value
-                   : DateTime.Now;
+                return this._dateCreated ?? DateTime.Now;
             }
 
             set { this._dateCreated = value; }

@@ -13,13 +13,6 @@ namespace PresentIT.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly UserService _userservice;
-
-        public AccountController(UserService userservice)
-        {
-            _userservice = userservice;
-        }
-
         public async Task Login(string returnUrl = "/Candidates/Index")
         {
              await HttpContext.ChallengeAsync("Auth0", new AuthenticationProperties() {RedirectUri = returnUrl });
@@ -46,7 +39,8 @@ namespace PresentIT.Controllers
                 Name = User.Identity.Name,
                 EmailAddress = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value,
                 ProfileImage = User.Claims.FirstOrDefault(c => c.Type == "picture")?.Value,
-                UserID = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value
+                UserID = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value,
+                Role = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value
             });
         }
     }

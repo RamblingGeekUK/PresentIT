@@ -19,7 +19,7 @@ namespace PresentIT.Models
         {
             get
             {
-                return this._dateCreated.HasValue
+                return _dateCreated.HasValue
                     ? this._dateCreated.Value
                     : DateTime.Now;
             }

@@ -23,12 +23,13 @@ namespace PresentIT.Controllers
         // GET: Candidates
         public async Task<IActionResult> Index()
         {
-            string UserID = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value; 
+            string UserID = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            string UserRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
 
             if (await _userservice.UserExistsAsync(UserID))
             {
                 var id = await _userservice.GetUserIDAsync(UserID);
-                return RedirectToAction("Details", "Candidates", new { id = id });
+                return RedirectToAction("Details", "Candidates", new { id });
             }
             else
             {

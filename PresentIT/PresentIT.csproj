@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="ngrok.exe" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="wwwroot\node_modules\media-recorder-js\.eslintrc.json" />
     <Content Include="wwwroot\node_modules\media-recorder-js\.jsdoc.json" />
     <Content Include="wwwroot\node_modules\media-recorder-js\bower.json" />
