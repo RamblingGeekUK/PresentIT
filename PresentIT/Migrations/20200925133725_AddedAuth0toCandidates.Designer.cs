@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PresentIT;
 
 namespace PresentIT.Migrations
 {
     [DbContext(typeof(PITContext))]
-    partial class PITContextModelSnapshot : ModelSnapshot
+    [Migration("20200925133725_AddedAuth0toCandidates")]
+    partial class AddedAuth0toCandidates
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

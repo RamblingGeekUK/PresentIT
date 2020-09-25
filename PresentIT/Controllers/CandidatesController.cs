@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PresentIT;
 using PresentIT.Models;
+using System.Security.Claims;
 
 namespace PresentIT.Controllers
 {
@@ -23,6 +24,11 @@ namespace PresentIT.Controllers
         public async Task<IActionResult> Index()
         {
             return View(await _context.Candidate.ToListAsync());
+        }
+
+        public IActionResult Thanks()
+        {
+            return View();
         }
 
         // GET: Candidates/Details/5
@@ -54,14 +60,15 @@ namespace PresentIT.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Firstname,Surname,Created,Accepted,VideoURL")] Candidate candidate)
+        public async Task<IActionResult> Create([Bind("Id Auth0,Firstname,Surname,Created,Accepted,VideoURL")] Candidate candidate)
         {
             if (ModelState.IsValid)
             {
                 candidate.Id = Guid.NewGuid();
+                candidate.Auth0 = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
                 _context.Add(candidate);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Thanks));
             }
             return View(candidate);
         }
