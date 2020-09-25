@@ -1,30 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PresentIT;
 using PresentIT.Models;
+using PresentIT.Services;
+using System;
+using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace PresentIT.Controllers
 {
     public class CandidatesController : Controller
     {
         private readonly PITContext _context;
+        private readonly UserService _userservice;
 
-        public CandidatesController(PITContext context)
+        public CandidatesController(PITContext context, UserService userService)
         {
             _context = context;
+            _userservice = userService;
         }
 
         // GET: Candidates
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Candidate.ToListAsync());
+            string UserID = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value; 
+
+            if (await _userservice.UserExistsAsync(UserID))
+            {
+                var id = await _userservice.GetUserIDAsync(UserID);
+                return RedirectToAction("Details", "Candidates", new { id = id });
+            }
+            else
+            {
+                return RedirectToAction("Create","Candidates");
+            }
         }
+
 
         public IActionResult Thanks()
         {
@@ -88,6 +99,24 @@ namespace PresentIT.Controllers
             }
             return View(candidate);
         }
+
+        // Check if Auth0 User Already Exits
+        // GET: 
+        public async Task<IActionResult> UserExists(string Auth0)
+        {
+            if (Auth0 == null)
+            {
+                return NotFound();
+            }
+
+            var candidate = await _context.Candidate.FindAsync(Auth0);
+            if (candidate == null)
+            {
+                return NotFound();
+            }
+            return View(candidate);
+        }
+
 
         // POST: Candidates/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 

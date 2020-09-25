@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure.Storage;
 using PresentIT.Models;
+using PresentIT.Services;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -11,9 +13,16 @@ namespace PresentIT.Controllers
 {
     public class AccountController : Controller
     {
-        public async Task Login(string returnUrl = "/Candidates/Create")
+        private readonly UserService _userservice;
+
+        public AccountController(UserService userservice)
         {
-            await HttpContext.ChallengeAsync("Auth0", new AuthenticationProperties() { RedirectUri = returnUrl });
+            _userservice = userservice;
+        }
+
+        public async Task Login(string returnUrl = "/Candidates/Index")
+        {
+             await HttpContext.ChallengeAsync("Auth0", new AuthenticationProperties() {RedirectUri = returnUrl });
         }
 
         [Authorize]

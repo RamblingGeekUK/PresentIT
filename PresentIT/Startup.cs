@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.IdentityModel.Tokens;
+using PresentIT.Services;
 using System;
 using System.Threading.Tasks;
 
@@ -29,7 +30,8 @@ namespace PresentIT
         {
 
             services.AddControllersWithViews();
-        
+            services.AddTransient<UserService>();
+
             services.AddDbContext<PITContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("DBConection")));
             
