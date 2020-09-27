@@ -5,14 +5,27 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<hr />
 <div>
+    <div class="card">
+        <div class="card-body">
+            <h5>Hi @Model.Firstname, you applied on the @Model.Created.ToLongDateString()</h5>
+        </div>
+    </div>
 
-    <p>Hi @Model.Firstname, you applied on the @Model.Created.ToLongDateString()</p>
 
     @if (Model.Accepted)
     {
-        <div>
-            <p>Great News! You have progressed to the next stage, we shall be in touch!</p>
+        <script type="text/javascript">
+                startConfetti();
+        </script>
+
+
+        <div class="alert alert-success" role="alert">
+            <h4 class="alert-heading">Well done!</h4>
+            <p>Aww yeah, you successfully have progressed to the next stage!</p>
+            <hr>
+            <p class="mb-0">We shall be in touch!</p>
         </div>
     }
     else
@@ -22,16 +35,33 @@
         </div>
     }
 
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.VideoURL)
-        </dt>
-        <dd class="col-sm-10">
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#videoModal">
+        Watch Your Video
+    </button>
 
-            <video width="400" controls controlsList="nodownload">
-                <source src=@Html.DisplayFor(model => model.VideoURL) type="video/mp4">
-                Your browser does not support HTML video.
-            </video>
-        </dd>
-    </dl>
+    <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Your Video</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <video width="400" controls controlsList="nodownload">
+                        <source src=@Html.DisplayFor(model => model.VideoURL) type="video/mp4">
+                        Your browser does not support HTML video.
+                    </video>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<script src="~/js/confetti.min.js"></script>
