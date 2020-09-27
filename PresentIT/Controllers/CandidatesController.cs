@@ -73,7 +73,7 @@ namespace PresentIT.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id Auth0,Firstname,Surname,Created,Accepted,VideoURL")] Candidate candidate)
+        public async Task<IActionResult> Create([Bind("Id,Auth0,Firstname,Surname,Created,Accepted,VideoURL")] Candidate candidate)
         {
             if (ModelState.IsValid)
             {
@@ -125,7 +125,7 @@ namespace PresentIT.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Firstname,Surname,Created,Accepted,VideoURL")] Candidate candidate)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Auth0,Firstname,Surname,Created,Accepted,VideoURL")] Candidate candidate)
         {
             if (id != candidate.Id)
             {
@@ -136,6 +136,7 @@ namespace PresentIT.Controllers
             {
                 try
                 {
+                    candidate.Auth0 = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
                     _context.Update(candidate);
                     await _context.SaveChangesAsync();
                 }

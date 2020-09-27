@@ -5,42 +5,30 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
-
 <div>
-    <h4>Candidate</h4>
-    <hr />
+
+    <p>Hi @Model.Firstname, you applied on the @Model.Created.ToLongDateString()</p>
+
+    @if (Model.Accepted)
+    {
+        <div>
+            <p>Great News! You have progressed to the next stage, we shall be in touch!</p>
+        </div>
+    }
+    else
+    {
+        <div>
+            <p>Thanks for checking in, your application is still under review at this time.</p>
+        </div>
+    }
+
     <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Firstname)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Firstname)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Surname)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Surname)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Created)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Created)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Accepted)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Accepted)
-        </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.VideoURL)
         </dt>
         <dd class="col-sm-10">
-            
-            <video width="400" controls>
+
+            <video width="400" controls controlsList="nodownload">
                 <source src=@Html.DisplayFor(model => model.VideoURL) type="video/mp4">
                 Your browser does not support HTML video.
             </video>
