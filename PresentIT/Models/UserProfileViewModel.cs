@@ -12,6 +12,6 @@ namespace PresentIT.Models
         public string Name { get; set; }
         public string ProfileImage { get; set; }
         public string UserID { get; set; }
-        public string Role { get; set; }
+        public Boolean Role { get; set; }
     }
 }

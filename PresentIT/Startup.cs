@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,13 +29,12 @@ namespace PresentIT
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllersWithViews();
             services.AddTransient<UserService>();
 
             services.AddDbContext<PITContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("DBConection")));
-            
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -42,7 +42,11 @@ namespace PresentIT
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-           
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("Candidate", policy => policy.RequireRole("Candidate"));
+            //    options.AddPolicy("employer", policy => policy.RequireRole("employer"));
+            //});
 
             // Add authentication services
             services.AddAuthentication(options => {
@@ -69,7 +73,8 @@ namespace PresentIT
 
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    NameClaimType = "name"
+                    NameClaimType = "name",
+                    RoleClaimType = "https://schemas.kryptos.eu.auth0.com/roles"
                 };
 
                 // Set the callback path, so Auth0 will call back to http://localhost:3000/callback

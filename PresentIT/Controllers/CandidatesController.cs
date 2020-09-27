@@ -24,7 +24,8 @@ namespace PresentIT.Controllers
         public async Task<IActionResult> Index()
         {
             string UserID = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-            string UserRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+
+            User.IsInRole("admin");
 
             if (await _userservice.UserExistsAsync(UserID))
             {

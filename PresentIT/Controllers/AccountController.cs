@@ -18,6 +18,12 @@ namespace PresentIT.Controllers
              await HttpContext.ChallengeAsync("Auth0", new AuthenticationProperties() {RedirectUri = returnUrl });
         }
 
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
+
         [Authorize]
         public async Task Logout()
         {
@@ -40,8 +46,8 @@ namespace PresentIT.Controllers
                 EmailAddress = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value,
                 ProfileImage = User.Claims.FirstOrDefault(c => c.Type == "picture")?.Value,
                 UserID = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value,
-                Role = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value
-            });
+                Role = User.IsInRole("employer")
+            }); 
         }
     }
 }
