@@ -13,7 +13,8 @@ using Microsoft.IdentityModel.Tokens;
 using PresentIT.Services;
 using System;
 using System.Threading.Tasks;
-
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
 
 namespace PresentIT
 {
@@ -42,12 +43,6 @@ namespace PresentIT
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            //services.AddAuthorization(options =>
-            //{
-            //    options.AddPolicy("Candidate", policy => policy.RequireRole("Candidate"));
-            //    options.AddPolicy("employer", policy => policy.RequireRole("employer"));
-            //});
-
             // Add authentication services
             services.AddAuthentication(options => {
                 options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -61,7 +56,7 @@ namespace PresentIT
 
                 // Configure the Auth0 Client ID and Client Secret
                 options.ClientId = Configuration["Auth0:ClientId"];
-                        options.ClientSecret = Configuration["Auth0:ClientSecret"];
+                options.ClientSecret = Configuration["Auth0:ClientSecret"];
 
                 // Set response type to code
                 options.ResponseType = OpenIdConnectResponseType.Code;
@@ -71,10 +66,13 @@ namespace PresentIT
                 options.Scope.Add("profile");
                 options.Scope.Add("email");
 
+                options.ClaimActions.MapJsonKey(ClaimTypes.Name, "name");
+                options.ClaimActions.MapJsonKey(ClaimTypes.Email, "email");
+
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     NameClaimType = "name",
-                    RoleClaimType = "https://schemas.kryptos.eu.auth0.com/roles"
+                    RoleClaimType = $"http://schemas.microsoft.com/ws/2008/06/identity/claims/roles"
                 };
 
                 // Set the callback path, so Auth0 will call back to http://localhost:3000/callback

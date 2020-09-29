@@ -25,8 +25,11 @@ namespace PresentIT.Controllers
         {
             string UserID = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
-            User.IsInRole("admin");
-
+            if (User.IsInRole("admin"))
+            {
+                return View(await _context.Candidate.ToListAsync());
+            }
+            
             if (await _userservice.UserExistsAsync(UserID))
             {
                 var id = await _userservice.GetUserIDAsync(UserID);
@@ -136,7 +139,7 @@ namespace PresentIT.Controllers
             {
                 try
                 {
-                    candidate.Auth0 = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+                    //candidate.Auth0 = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
                     _context.Update(candidate);
                     await _context.SaveChangesAsync();
                 }
