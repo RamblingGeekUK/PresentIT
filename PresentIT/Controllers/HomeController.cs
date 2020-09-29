@@ -26,17 +26,6 @@ namespace PresentIT.Controllers
             return View();
         }
 
-        [Authorize]
-        public IActionResult Option1()
-        {
-            return View();
-        }
-        [Authorize]
-        public IActionResult Option2()
-        {
-            return View();
-        }
-
         public IActionResult Privacy()
         {
             return View();
