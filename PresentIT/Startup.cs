@@ -49,19 +49,21 @@ namespace PresentIT
             //});
 
             // Add authentication services
-            services.AddAuthentication(options => {
+            services.AddAuthentication(options =>
+            {
                 options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             })
             .AddCookie()
-            .AddOpenIdConnect("Auth0", options => {
+            .AddOpenIdConnect("Auth0", options =>
+            {
                 // Set the authority to your Auth0 domain
                 options.Authority = $"https://{Configuration["Auth0:Domain"]}";
 
                 // Configure the Auth0 Client ID and Client Secret
                 options.ClientId = Configuration["Auth0:ClientId"];
-                        options.ClientSecret = Configuration["Auth0:ClientSecret"];
+                options.ClientSecret = Configuration["Auth0:ClientSecret"];
 
                 // Set response type to code
                 options.ResponseType = OpenIdConnectResponseType.Code;
@@ -70,11 +72,11 @@ namespace PresentIT
                 options.Scope.Add("openid");
                 options.Scope.Add("profile");
                 options.Scope.Add("email");
-
+                
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     NameClaimType = "name",
-                    RoleClaimType = "https://schemas.kryptos.eu.auth0.com/roles"
+                    RoleClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/roles"
                 };
 
                 // Set the callback path, so Auth0 will call back to http://localhost:3000/callback
@@ -110,15 +112,15 @@ namespace PresentIT
                     },
                     OnRedirectToIdentityProvider = (context) =>
                     {
-                        context.ProtocolMessage.SetParameter("audience", "https://kryptos.eu.auth0.com/api/v2/");
+                        context.ProtocolMessage.SetParameter("audience", $"https://{Configuration["Auth0:Domain"]}/api/v2/");
 
                         return Task.FromResult(0);
                     }
                 };
-                
+
             });
 
-   
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
