@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Storage;
 using Microsoft.Azure.Storage.Blob;
 using Microsoft.Extensions.Configuration;
+using PresentIT.Services;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -12,9 +13,12 @@ namespace PresentIT.Controllers
     public class VideoController : Controller
     {
         private readonly IConfiguration _configuration;
-        public VideoController(IConfiguration configuration)
+        private UserService _userService;
+
+        public VideoController(IConfiguration configuration, UserService userService)
         {
             _configuration = configuration;
+            _userService = userService;
         }
 
         [HttpPost]
@@ -45,7 +49,7 @@ namespace PresentIT.Controllers
         static string SpecialFileName
         {
             get
-            { 
+            {
                 return string.Format($"{DateTime.Now:yyyy-MM-dd_hh-mm-ss-tt}.webm");
             }
         }

@@ -25,5 +25,6 @@ namespace PresentIT.Services
         {
             return (await _context.Candidate.FirstOrDefaultAsync(x=>x.Auth0 == Auth0Id)).Id;
         }
+
     }
 }

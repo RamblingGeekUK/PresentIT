@@ -139,7 +139,6 @@ namespace PresentIT.Controllers
             {
                 try
                 {
-                    //candidate.Auth0 = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
                     _context.Update(candidate);
                     await _context.SaveChangesAsync();
                 }
