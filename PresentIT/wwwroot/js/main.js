@@ -80,8 +80,8 @@ var inputCard = {
 
         start: document.querySelector('.j-start'),
         stop: document.querySelector('.j-stop'),
-        pause: document.querySelector('.j-pause'),
-        resume: document.querySelector('.j-resume'),
+        //pause: document.querySelector('.j-pause'),
+        //resume: document.querySelector('.j-resume'),
 
         selectAudioSource: document.getElementById('j-audioSource'),
         selectVideoSource: document.getElementById('j-videoSource'),
@@ -255,17 +255,17 @@ var inputCard = {
         var self = this;
 
         var evStart = new CustomEvent('started');
-        var evPause = new CustomEvent('paused');
-        var evResume = new CustomEvent('resumed');
+        //var evPause = new CustomEvent('paused');
+        //var evResume = new CustomEvent('resumed');
         var evStop = new CustomEvent('stopped');
         var evChange = new CustomEvent('changed');
 
         self.ui.start.addEventListener('click', function () {
             self.ui.start.disabled = true;
-            self.ui.resume.disabled = true;
+           // self.ui.resume.disabled = true;
 
             self.ui.stop.disabled = false;
-            self.ui.pause.disabled = false;
+           // self.ui.pause.disabled = false;
 
             self.ui.selectMimeTypeFormats.disabled = true;
 
@@ -276,33 +276,33 @@ var inputCard = {
             self.ui.start.disabled = false;
 
             self.ui.stop.disabled = true;
-            self.ui.pause.disabled = true;
-            self.ui.resume.disabled = true;
+           // self.ui.pause.disabled = true;
+           // self.ui.resume.disabled = true;
 
             self.ui.selectMimeTypeFormats.disabled = false;
 
             self.ui.wrap.dispatchEvent(evStop);
         });
 
-        self.ui.pause.addEventListener('click', function () {
-            self.ui.start.disabled = true;
-            self.ui.pause.disabled = true;
+        //self.ui.pause.addEventListener('click', function () {
+        //    self.ui.start.disabled = true;
+        //   // self.ui.pause.disabled = true;
 
-            self.ui.resume.disabled = false;
-            self.ui.stop.disabled = false;
+        //   // self.ui.resume.disabled = false;
+        //    self.ui.stop.disabled = false;
 
-            self.ui.wrap.dispatchEvent(evPause);
-        });
+        //    self.ui.wrap.dispatchEvent(evPause);
+        //});
 
-        self.ui.resume.addEventListener('click', function () {
-            self.ui.start.disabled = true;
-            self.ui.resume.disabled = true;
+        //self.ui.resume.addEventListener('click', function () {
+        //    self.ui.start.disabled = true;
+        //  //  self.ui.resume.disabled = true;
 
-            self.ui.pause.disabled = false;
-            self.ui.stop.disabled = false;
+        //  //  self.ui.pause.disabled = false;
+        //    self.ui.stop.disabled = false;
 
-            self.ui.wrap.dispatchEvent(evResume);
-        });
+        //    self.ui.wrap.dispatchEvent(evResume);
+        //});
 
         function handleSources() {
             var constrains = self._getSources();
@@ -401,13 +401,13 @@ function initRecorder() {
 
     }, false);
 
-    inputCard.ui.wrap.addEventListener('paused', function () {
-        rec.pause();
-    }, false);
+    //inputCard.ui.wrap.addEventListener('paused', function () {
+    //    rec.pause();
+    //}, false);
 
-    inputCard.ui.wrap.addEventListener('resumed', function () {
-        rec.resume();
-    }, false);
+    //inputCard.ui.wrap.addEventListener('resumed', function () {
+    //    rec.resume();
+    //}, false);
 
     inputCard.ui.wrap.addEventListener('changed', function () {
         if (rec.getState() === 'recording') {
@@ -424,7 +424,7 @@ function initRecorder() {
     //    rec.download(null, resultCard.blob);
     //}, false);
 
-    resultCard.ui.wrap.addEventListener('download', function () {
+    resultCard.ui.wrap.addEventListener('save', function () {
         azureStream(resultCard.blob);
     }, false);
 }

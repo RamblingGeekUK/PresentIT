@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using PresentIT.Models;
 
@@ -12,18 +13,28 @@ namespace PresentIT.Controllers
 {
     public class HomeController : Controller
     {
-#pragma warning disable IDE0052 // Remove unread private members
-        private readonly ILogger<HomeController> _logger;
-#pragma warning restore IDE0052 // Remove unread private members
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly PITContext _context;
+        private readonly ILogger<HomeController> _logger;
+
+        public HomeController(ILogger<HomeController> logger, PITContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+
+            if (User.IsInRole("admin"))
+            {
+                return View(await _context.Candidate.ToListAsync());
+            }
+            else
+            {
+                return View();
+            }
+
         }
 
         public IActionResult Privacy()
