@@ -12,6 +12,7 @@ namespace PresentIT.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public Guid Id { get; set; }
+
         public string Auth0 { get; set; }
         public string Firstname { get; set; }
         public string Surname { get; set; }

@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,7 +12,8 @@ using Microsoft.IdentityModel.Tokens;
 using PresentIT.Services;
 using System;
 using System.Threading.Tasks;
-
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
 
 namespace PresentIT
 {
@@ -42,22 +42,14 @@ namespace PresentIT
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            //services.AddAuthorization(options =>
-            //{
-            //    options.AddPolicy("Candidate", policy => policy.RequireRole("Candidate"));
-            //    options.AddPolicy("employer", policy => policy.RequireRole("employer"));
-            //});
-
             // Add authentication services
-            services.AddAuthentication(options =>
-            {
+            services.AddAuthentication(options => {
                 options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             })
             .AddCookie()
-            .AddOpenIdConnect("Auth0", options =>
-            {
+            .AddOpenIdConnect("Auth0", options => {
                 // Set the authority to your Auth0 domain
                 options.Authority = $"https://{Configuration["Auth0:Domain"]}";
 
@@ -72,11 +64,14 @@ namespace PresentIT
                 options.Scope.Add("openid");
                 options.Scope.Add("profile");
                 options.Scope.Add("email");
-                
+
+                options.ClaimActions.MapJsonKey(ClaimTypes.Name, "name");
+                options.ClaimActions.MapJsonKey(ClaimTypes.Email, "email");
+
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     NameClaimType = "name",
-                    RoleClaimType = "http://schemas.microsoft.com/ws/2008/06/identity/claims/roles"
+                    RoleClaimType = $"http://schemas.microsoft.com/ws/2008/06/identity/claims/roles"
                 };
 
                 // Set the callback path, so Auth0 will call back to http://localhost:3000/callback
@@ -117,10 +112,10 @@ namespace PresentIT
                         return Task.FromResult(0);
                     }
                 };
-
+                
             });
 
-
+   
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
