@@ -29,7 +29,7 @@ namespace PresentIT.Controllers
             {
                 return View(await _context.Candidate.ToListAsync());
             }
-            
+
             if (await _userservice.UserExistsAsync(UserID))
             {
                 var id = await _userservice.GetUserIDAsync(UserID);
@@ -37,7 +37,7 @@ namespace PresentIT.Controllers
             }
             else
             {
-                return RedirectToAction("Create","Candidates");
+                return RedirectToAction("Create", "Candidates");
             }
         }
 
