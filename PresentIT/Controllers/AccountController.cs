@@ -2,9 +2,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.Storage;
 using PresentIT.Models;
-using PresentIT.Services;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
